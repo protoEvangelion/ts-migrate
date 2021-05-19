@@ -400,6 +400,8 @@ const jsDocTransformerFactory = ({
           }
           acceptsTypeParameters = typeOptions.acceptsTypeParameters !== false;
         }
+      } else {
+        return;
       }
 
       name = factory.createIdentifier(text);
