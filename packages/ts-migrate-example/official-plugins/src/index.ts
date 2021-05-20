@@ -18,7 +18,8 @@ import {
     reactDefaultPropsPlugin,
     reactPropsPlugin,
     reactShapePlugin,
-    addConversionsPlugin
+    addConversionsPlugin,
+    tsIgnorePlugin
 } from "ts-migrate-plugins";
 
 // it will change content of the index.ts in the input folder
@@ -47,7 +48,10 @@ async function runMigration() {
         .addPlugin(jsDocPlugin, { annotateReturns: true })
         // .addPlugin(explicitAnyPlugin, {})
         // .addPlugin(eslintFixPlugin, {})
-        // .addPlugin(tsIgnorePlugin, {})
+        .addPlugin(tsIgnorePlugin, {
+            truncationText: '...',
+            hideErrorCode: true
+        })
         // .addPlugin(restoreNewLinesPlugin, {})
 
 

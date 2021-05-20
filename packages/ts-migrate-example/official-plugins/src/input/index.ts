@@ -17,5 +17,7 @@ export const capitalizeFirstLetta = (string) => {
     const a = string;
     const b = a + " hi";
 
+    string.toPrecision()
+
     return a + b;
 };
