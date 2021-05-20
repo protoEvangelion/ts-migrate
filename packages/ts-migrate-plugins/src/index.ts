@@ -13,6 +13,8 @@ import reactPropsPlugin from './plugins/react-props';
 import reactShapePlugin from './plugins/react-shape';
 import stripTSIgnorePlugin from './plugins/strip-ts-ignore';
 import tsIgnorePlugin from './plugins/ts-ignore';
+import preserveNewLinesPlugin from './plugins/preserve-new-lines';
+import restoreNewLinesPlugin from './plugins/restore-new-lines';
 import updateSourceText, {
   SourceTextUpdate as SourceTextUpdateType,
 } from './utils/updateSourceText';
@@ -35,6 +37,8 @@ export {
   reactShapePlugin,
   stripTSIgnorePlugin,
   tsIgnorePlugin,
+  preserveNewLinesPlugin,
+  restoreNewLinesPlugin
 };
 
 export { updateSourceText };

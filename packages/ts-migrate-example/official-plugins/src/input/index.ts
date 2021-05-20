@@ -1,5 +1,4 @@
 /**
- * @param {'hi'} string - string to capitalize
  * @returns {String}
  */
 export const capitalizeFirstLetterz = (string) => {
@@ -16,7 +15,6 @@ export const capitalizeFirstLetterz = (string) => {
  */
 export const capitalizeFirstLetta = (string) => {
     const a = string;
-
     const b = a + " hi";
 
     return a + b;
