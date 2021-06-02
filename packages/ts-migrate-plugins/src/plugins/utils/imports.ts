@@ -165,6 +165,8 @@ export function updateImports(
     }
 
     if (importClause !== importDeclaration.importClause) {
+      console.log('importClause------------>', importClause)
+      console.log('importDec--------->', importDeclaration)
       let numImports = 0;
       if (importClause.name) {
         numImports += 1;
@@ -276,9 +278,12 @@ export function updateImports(
 
     const pos =
       importDeclarations.length > 0 ? importDeclarations[importDeclarations.length - 1].end : 0;
+    console.log('!!!!!!!!!!!')
     nodes.forEach((node, i) => {
       let text = printer.printNode(ts.EmitHint.Unspecified, node, sourceFile);
       if (pos > 0 || i > 0) text = `\n${text}`;
+
+      console.log('text', text)
 
       updates.push({ kind: 'insert', index: pos, text });
     });

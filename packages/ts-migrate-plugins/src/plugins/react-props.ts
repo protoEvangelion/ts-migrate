@@ -25,6 +25,7 @@ import {
 type Options = {
   shouldUpdateAirbnbImports?: boolean;
   shouldKeepPropTypes?: boolean;
+  spreadReplacements?: SpreadReplacement[]
 } & AnyAliasOptions &
   AnyFunctionAliasOptions;
 
@@ -79,15 +80,17 @@ const reactPropsPlugin: Plugin<Options> = {
       updatedSourceText,
       sourceFile.languageVersion,
     );
-    const importUpdates = !options.shouldKeepPropTypes
+
+    const filteredImports = spreadReplacements.filter((cur) => cur.typeImport);
+    const importUpdates = !options.shouldKeepPropTypes && filteredImports.length
       ? updateImports(
           updatedSourceFile,
-          spreadReplacements.map((cur) => cur.typeImport),
+          filteredImports.map((cur) => cur.typeImport!),
           [
             { moduleSpecifier: 'prop-types' },
             ...(options.shouldUpdateAirbnbImports ? importReplacements : []),
             ...(options.shouldUpdateAirbnbImports
-              ? spreadReplacements.map((cur) => cur.spreadImport)
+              ? spreadReplacements.map((cur) => cur.spreadImport!)
               : []),
           ],
         )
@@ -102,9 +105,9 @@ export default reactPropsPlugin;
 
 type SpreadReplacement = {
   spreadId: string;
-  spreadImport: DefaultImport | NamedImport;
+  spreadImport?: DefaultImport | NamedImport;
   typeRef: ts.TypeReferenceNode;
-  typeImport: DefaultImport | NamedImport;
+  typeImport?: DefaultImport | NamedImport;
 };
 
 // airbnb related imports
@@ -312,7 +315,7 @@ function updateObjectLiteral(
     anyAlias: options.anyAlias,
     anyFunctionAlias: options.anyFunctionAlias,
     implicitChildren,
-    spreadReplacements,
+    spreadReplacements: [...spreadReplacements, ...(options.spreadReplacements || []) ],
     propTypeIdentifiers,
   });
   let propsTypeAlias = ts.factory.createTypeAliasDeclaration(
