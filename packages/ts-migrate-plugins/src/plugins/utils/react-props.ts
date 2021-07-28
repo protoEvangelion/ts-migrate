@@ -39,7 +39,6 @@ export default function getTypeFromPropTypesObjectLiteral(
     } else if (ts.isSpreadAssignment(property)) {
       const spreadId = property.expression.getText();
       const replacement = params.spreadReplacements.find((cur) => cur.spreadId === spreadId);
-      console.log('spreadId', spreadId, replacement)
       if (replacement) {
         intersectionTypes.push(replacement.typeRef);
         handled = true;
@@ -52,7 +51,7 @@ export default function getTypeFromPropTypesObjectLiteral(
     }
   }
 
-  let node: ts.TypeLiteralNode | ts.IntersectionTypeNode | ts.UnionTypeNode = ts.factory.createTypeLiteralNode(
+  let node: ts.TypeLiteralNode | ts.IntersectionTypeNode = ts.factory.createTypeLiteralNode(
     members,
   );
   if (intersectionTypes.length > 0) {

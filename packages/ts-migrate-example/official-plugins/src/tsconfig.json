@@ -1,6 +1,0 @@
-{
-    "extends": "../../../tsconfig.json",
-    "include": ["input"]
-}
-
-ts-node-dev --inspect=4321 --respawn --transpile-only src/index.ts

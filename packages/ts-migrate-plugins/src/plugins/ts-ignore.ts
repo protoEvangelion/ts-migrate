@@ -12,7 +12,7 @@ type Options = {
 };
 
 const truncationText = '... Remove this comment to see the full error message'
-const TS_IGNORE_MESSAGE_LIMIT = 50;
+const TS_IGNORE_MESSAGE_LIMIT = 75;
 
 const optionProperties: Properties = {
   useTsIgnore: { type: 'boolean' },

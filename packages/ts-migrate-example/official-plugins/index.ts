@@ -15,21 +15,22 @@ import {
     reactDefaultPropsPlugin,
     reactPropsPlugin,
     reactShapePlugin,
+    eslintFixPlugin,
     tsIgnorePlugin
 } from "ts-migrate-plugins";
 
 // it will change content of the index.ts in the input folder
 
-const dir = process.argv[2] || 'src';
+const dir = process.argv[2] || 'input';
 
 async function runMigration() {
-    const inputDir = path.resolve(__dirname, `../${dir}`);
+    const inputDir = path.resolve(__dirname, dir);
 
     console.log(`Running migration on ${inputDir}`);
 
     const config = new MigrateConfig()
         // run eslint fix first to fix the no parens issue: https://github.com/airbnb/ts-migrate/issues/39
-        // .addPlugin(eslintFixPlugin, {})
+        .addPlugin(eslintFixPlugin, {})
         .addPlugin(preserveNewLinesPlugin, {})
         .addPlugin(declareMissingClassPropertiesPlugin, {})
         .addPlugin(hoistClassStaticsPlugin, {})
@@ -41,7 +42,7 @@ async function runMigration() {
         .addPlugin(reactShapePlugin, {})
         .addPlugin(jsDocPlugin, { annotateReturns: true })
         .addPlugin(explicitAnyPlugin, {})
-        // .addPlugin(eslintFixPlugin, {})
+        .addPlugin(eslintFixPlugin, {})
         .addPlugin(tsIgnorePlugin, {
             truncationText: '...',
             hideErrorCode: true

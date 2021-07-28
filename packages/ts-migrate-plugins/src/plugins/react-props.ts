@@ -52,7 +52,7 @@ const reactPropsPlugin: Plugin<Options> = {
     for (const node of sourceFile.statements) {
       // Scan for prop type imports and build a map
       // Assumes import statements are higher up in the file than react components
-      if (ts.isImportDeclaration(node) && /prop-types/.test(node.moduleSpecifier.getText())) {
+      if (ts.isImportDeclaration(node) && /@styled-system\/prop-types/.test(node.moduleSpecifier.getText())) {
         const importBindings = node.importClause?.namedBindings;
         if (importBindings && ts.isNamedImports(importBindings)) {
           importBindings.elements.forEach((specifier) => {
@@ -81,7 +81,7 @@ const reactPropsPlugin: Plugin<Options> = {
       sourceFile.languageVersion,
     );
 
-    const filteredImports = spreadReplacements.filter((cur) => cur.typeImport);
+    const filteredImports = (options.spreadReplacements || spreadReplacements).filter((cur) => cur.typeImport);
     const importUpdates = !options.shouldKeepPropTypes && filteredImports.length
       ? updateImports(
           updatedSourceFile,
@@ -90,7 +90,7 @@ const reactPropsPlugin: Plugin<Options> = {
             { moduleSpecifier: 'prop-types' },
             ...(options.shouldUpdateAirbnbImports ? importReplacements : []),
             ...(options.shouldUpdateAirbnbImports
-              ? spreadReplacements.map((cur) => cur.spreadImport!)
+              ? (options.spreadReplacements || spreadReplacements).map((cur) => cur.spreadImport!)
               : []),
           ],
         )
@@ -111,7 +111,7 @@ type SpreadReplacement = {
 };
 
 // airbnb related imports
-const importReplacements = [{ moduleSpecifier: 'airbnb-prop-types' }];
+const importReplacements = [{ moduleSpecifier: 'styled-system' }, { moduleSpecifier: '@tnbl/design-system/system' }];
 const spreadReplacements: SpreadReplacement[] = [
   {
     spreadId: 'withStylesPropTypes',
