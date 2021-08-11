@@ -6,18 +6,18 @@ import updateSourceText, { SourceTextUpdate } from '../utils/updateSourceText';
 import { createValidate, Properties } from '../utils/validateOptions';
 
 type Options = {
-  useTsIgnore?: boolean
-  hideErrorCode?: boolean
-  truncationText?: string
+  useTsIgnore?: boolean;
+  hideErrorCode?: boolean;
+  truncationText?: string;
 };
 
-const truncationText = '... Remove this comment to see the full error message'
+const truncationText = '... Remove this comment to see the full error message';
 const TS_IGNORE_MESSAGE_LIMIT = 75;
 
 const optionProperties: Properties = {
   useTsIgnore: { type: 'boolean' },
   truncationText: { type: 'string', default: truncationText },
-  hideErrorCode: { type: 'boolean', default: 'false' }
+  hideErrorCode: { type: 'boolean', default: 'false' },
 };
 
 const tsIgnorePlugin: Plugin<Options> = {
@@ -58,14 +58,7 @@ function getTextWithIgnores(
     const message = messageLines[messageLines.length - 1];
     const errorExpression = options.useTsIgnore ? 'ts-ignore' : `ts-expect-error`;
     const errorCodeText = options.hideErrorCode ? '' : `ts-migrate(${code})`;
-    const tsIgnoreCommentText = `@${errorExpression}${errorCodeText} FIXME: ${
-      message.length > TS_IGNORE_MESSAGE_LIMIT
-        ? `${message.slice(
-            0,
-            TS_IGNORE_MESSAGE_LIMIT,
-          )}${options.truncationText || truncationText}`
-        : message
-    }`;
+    const tsIgnoreCommentText = `@${errorExpression} FIXME`;
     if (!isIgnored[diagnosticLine]) {
       let commentLine = diagnosticLine;
       let pos = getStartOfLinePos(commentLine, sourceFile);
