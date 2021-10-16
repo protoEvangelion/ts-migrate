@@ -36,8 +36,8 @@ export default function getTypeFromPropTypesObjectLiteral(
           handled = true;
         }
       }
-    } else if (ts.isSpreadAssignment(property) && ts.isIdentifier(property.expression)) {
-      const spreadId = property.expression.text;
+    } else if (ts.isSpreadAssignment(property)) {
+      const spreadId = property.expression.getText();
       const replacement = params.spreadReplacements.find((cur) => cur.spreadId === spreadId);
       if (replacement) {
         intersectionTypes.push(replacement.typeRef);

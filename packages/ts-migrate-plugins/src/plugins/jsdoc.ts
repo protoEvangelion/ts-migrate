@@ -266,7 +266,7 @@ const jsDocTransformerFactory = ({
   // All visitJSDoc functions are adapted from:
   // https://github.com/microsoft/TypeScript/blob/v4.0.2/src/services/codefixes/annotateWithTypeFromJSDoc.ts
 
-  function visitJSDocType(node: ts.Node, topLevelParam = false): ts.TypeNode {
+  function visitJSDocType(node: ts.Node, topLevelParam = false): ts.TypeNode | undefined {
     switch (node.kind) {
       case ts.SyntaxKind.JSDocAllType:
       case ts.SyntaxKind.JSDocUnknownType:
@@ -400,6 +400,8 @@ const jsDocTransformerFactory = ({
           }
           acceptsTypeParameters = typeOptions.acceptsTypeParameters !== false;
         }
+      } else {
+        return;
       }
 
       name = factory.createIdentifier(text);

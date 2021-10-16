@@ -3,9 +3,13 @@ import { Collection } from 'jscodeshift/src/Collection';
 import ts from 'typescript';
 import { Plugin } from 'ts-migrate-server';
 import { isDiagnosticWithLinePosition } from '../utils/type-guards';
-import { AnyAliasOptions, validateAnyAliasOptions } from '../utils/validateOptions';
+import {
+  AnyAliasOptions,
+  AnyFunctionAliasOptions,
+  validateAnyAliasOptions,
+} from '../utils/validateOptions';
 
-type Options = AnyAliasOptions;
+type Options = AnyAliasOptions & AnyFunctionAliasOptions;
 
 const explicitAnyPlugin: Plugin<Options> = {
   name: 'explicit-any',
